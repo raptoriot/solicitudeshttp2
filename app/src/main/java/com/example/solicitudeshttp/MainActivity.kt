@@ -17,6 +17,7 @@ import java.net.URL
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
+import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
 
 
@@ -43,30 +44,22 @@ class MainActivity : AppCompatActivity() {
 
         val bgetvolley=findViewById<Button>(R.id.bGetVolley)
 
+        val bpostVally=findViewById<Button>(R.id.bPostVolley)
 
-        bgetvolley.setOnClickListener {
+        bPostVolley.setOnClickListener {
             if(Network.hayREd(this)){
-                Log.d("app","si entro al botn")
-                //solicitudHTTPVolley("http://192.168.1.100:5002/store")
-                //sendPostRequest("mensaje","hola")
-
-
 
                 val url = "http://192.168.1.100:5002/store"
 
-                val texto="hola"
-                // Post parameters
-                // Form fields and values
-
                 val params = HashMap<String,String>()
-                params["name"] = "prueba2"
+                params["name"] = "tendavolley1"
                 params["item"] = "1234"
                 val jsonObject = JSONObject(params as Map<*, *>)
 
                 val request = JsonObjectRequest(Request.Method.POST,url,jsonObject,
                     Response.Listener { response ->
                         // Process the json
-
+                        Log.d("En POST",""+response)
 
                     }, Response.ErrorListener{
                         // Error in request
@@ -79,6 +72,27 @@ class MainActivity : AppCompatActivity() {
                     1f // DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
                 )
                 VolleySingleton.getInstance(this).addToRequestQueue(request)
+
+
+
+
+
+            }
+            else{
+                Toast.makeText(this,"Asegurate que exista la red a Internet",Toast.LENGTH_LONG).show()
+            }
+
+
+        }
+
+
+        bgetvolley.setOnClickListener {
+            if(Network.hayREd(this)){
+                Log.d("app","si entro al botn")
+                solicitudHTTPVolley("http://192.168.1.100:5002/store")
+                //sendPostRequest("mensaje","hola")
+
+
 
 
 
